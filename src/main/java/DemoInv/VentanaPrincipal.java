@@ -9,13 +9,14 @@ public class VentanaPrincipal extends JFrame{
     private JPanel panel1;
     private JPanel panelBotones;
     private JButton button1;
-    private JButton button2;
-    private JButton button3;
+    private JButton almacenButton;
+    private JButton ETCButton;
     private JPanel paneles;
     private JButton tablaStock;
     private JPanel panelProductos;
     private JPanel panelTrabajadores;
     private JPanel panelStock;
+    private JButton provedoresButton;
 
     public VentanaPrincipal(){
         add(panel1);

@@ -34,7 +34,7 @@ public class DatabaseToTable {
             for (int i = 1; i <= columnCount; i++) {
                 columnNames[i - 1] = rsmd.getColumnName(i);
             }
-            model.setColumnIdentifiers(columnNames);
+            model.setColumnIdentifiers(columnNames);  // CORRECCIÓN AQUÍ
 
             // Llenar filas de la tabla con los datos del ResultSet
             while (rs.next()) {

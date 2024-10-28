@@ -9,7 +9,7 @@ public class DatabaseToTable {
     public static Connection getConnection() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/nba",
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventario",
                     "root",
                     "1234");
         } catch (SQLException e) {
@@ -18,12 +18,9 @@ public class DatabaseToTable {
         return con;
     }
 
-    public static void cargarDatos(JTable table) {
+    public static void cargarDatos(DefaultTableModel model, String query) {
         Connection con = getConnection();
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0); // Limpiar la tabla
 
-        String query = "select codigo, equipo_local from partidos";
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
 
             ResultSetMetaData rsmd = rs.getMetaData();

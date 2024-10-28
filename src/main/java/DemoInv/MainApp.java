@@ -13,11 +13,13 @@ public class MainApp {
 
         // Crear el JTable
         JTable table = new JTable(new DefaultTableModel());
+        DefaultTableModel model = new DefaultTableModel();
+        table.setModel(model);
         JScrollPane scrollPane = new JScrollPane(table);
         frame.add(scrollPane, BorderLayout.CENTER);
 
         // Cargar los datos desde la base de datos
-        DatabaseToTable.cargarDatos(table);
+        DatabaseToTable.cargarDatos(model, "select * from productos");
 
         frame.setVisible(true);
     }

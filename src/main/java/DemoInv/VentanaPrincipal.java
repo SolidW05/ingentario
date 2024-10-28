@@ -8,56 +8,71 @@ import java.awt.event.ActionListener;
 public class VentanaPrincipal extends JFrame {
     private JPanel VentanaPrincipal;
     private JPanel panelBotones;
-    private JButton button1;
-    private JButton almacenButton;
-    private JButton ETCButton;
+    private JButton btnStock;
+    private JButton btnProvedores;
+    private JButton btnTrabajadores;
     private JPanel paneles;
     private JButton tablaStock;
     private JPanel panelProductos;
     private JPanel panelTrabajadores;
     private JPanel panelStock;
-    private JButton provedoresButton;
+    private JButton btnProductos;
     private JLabel Titulo;
+    private JPanel panelProvedores;
     private JButton productosButton;
     private JButton sucursalButton;
     private JButton trabajadoresButton;
 
     public VentanaPrincipal() {
-        // Inicializar los botones manualmente
-        productosButton = new JButton("Productos");
-        sucursalButton = new JButton("Sucursal");
-        provedoresButton = new JButton("Proveedores");
-        trabajadoresButton = new JButton("Trabajadores");
 
-        // Agregar los botones al panel de botones
-        panelBotones = new JPanel(new GridLayout(4, 1));
-        panelBotones.add(productosButton);
-        panelBotones.add(sucursalButton);
-        panelBotones.add(provedoresButton);
-        panelBotones.add(trabajadoresButton);
+        add(VentanaPrincipal);
+        pack();
 
-        // Configurar el layout de la ventana
-        setLayout(new BorderLayout());
-        add(panelBotones, BorderLayout.WEST);
-        add(paneles, BorderLayout.CENTER);
+        paneles.add(panelTrabajadores, "panelTrabajadores" );
+        paneles.add(panelProvedores, "panelProvedores" );
+        paneles.add(panelProductos, "panelProductos" );
+        paneles.add(panelStock, "panelStock" );
+
 
         // Configurar botones
-        configurarBotones(productosButton);
-        configurarBotones(sucursalButton);
-        configurarBotones(provedoresButton);
-        configurarBotones(trabajadoresButton);
+        configurarBotones(btnTrabajadores);
+        configurarBotones(btnProvedores);
+        configurarBotones(btnProductos);
+        configurarBotones(btnStock);
 
         // Agregar imágenes a los botones
-        agregarImagenABoton(productosButton, "src/ImagenesButton/Productos.png");
-        agregarImagenABoton(sucursalButton, "src/ImagenesButton/Sucursal.png");
-        agregarImagenABoton(provedoresButton, "src/ImagenesButton/Provedores.png");
-        agregarImagenABoton(trabajadoresButton, "src/ImagenesButton/Trabajadores.png");
+        agregarImagenABoton(btnProductos, "src/ImagenesButton/Productos.png");
+        agregarImagenABoton(btnStock, "src/ImagenesButton/Sucursal.png");
+        agregarImagenABoton(btnProvedores, "src/ImagenesButton/Provedores.png");
+        agregarImagenABoton(btnTrabajadores, "src/ImagenesButton/Trabajadores.png");
 
-        button1.addActionListener(new ActionListener() {
+        btnStock.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) (paneles.getLayout());
                 cl.show(paneles, "panelStock");
+            }
+        });
+        btnProductos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cl = (CardLayout) (paneles.getLayout());
+                cl.show(paneles, "panelProductos");
+            }
+        });
+        btnTrabajadores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cl = (CardLayout) (paneles.getLayout());
+                cl.show(paneles, "panelTrabajadores");
+            }
+        });
+
+        btnProvedores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cl = (CardLayout) (paneles.getLayout());
+                cl.show(paneles, "panelProvedores");
             }
         });
 
@@ -65,6 +80,7 @@ public class VentanaPrincipal extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
 
     private void configurarBotones(JButton boton) {
         boton.setBorderPainted(false);

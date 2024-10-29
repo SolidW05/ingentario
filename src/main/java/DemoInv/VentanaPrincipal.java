@@ -1,6 +1,7 @@
 package DemoInv;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +13,6 @@ public class VentanaPrincipal extends JFrame {
     private JButton btnProvedores;
     private JButton btnTrabajadores;
     private JPanel paneles;
-    private JButton tablaStock;
     private JPanel panelProductos;
     private JPanel panelTrabajadores;
     private JPanel panelStock;
@@ -33,6 +33,36 @@ public class VentanaPrincipal extends JFrame {
         paneles.add(panelProductos, "panelProductos" );
         paneles.add(panelStock, "panelStock" );
 
+        // agregar tablas
+        // Productos
+        DefaultTableModel mdlProductos = new DefaultTableModel();
+        DatabaseToTable.cargarDatos(mdlProductos, "select * from productos");
+        JTable tblProductos = new JTable(mdlProductos);
+        JScrollPane scrlproductos = new JScrollPane(tblProductos);
+        panelProductos.add(scrlproductos);
+        // Stock
+
+        DefaultTableModel mdlStock = new DefaultTableModel();
+        DatabaseToTable.cargarDatos(mdlStock, "select * from stock");
+        JTable tblStock = new JTable(mdlStock);
+        JScrollPane scrlStock = new JScrollPane(tblStock);
+        panelStock.add(scrlStock);
+
+        //Provedores
+
+        DefaultTableModel mdlProvedores = new DefaultTableModel();
+        DatabaseToTable.cargarDatos(mdlProvedores, "select * from proveedores");
+        JTable tblProveedores = new JTable(mdlProvedores);
+        JScrollPane scrlProveedores = new JScrollPane(tblProveedores);
+        panelProvedores.add(scrlProveedores);
+
+        //Trabajadores
+
+        DefaultTableModel mdlTrabajadores = new DefaultTableModel();
+        DatabaseToTable.cargarDatos(mdlTrabajadores, "select nombre, puesto, telefono,email from trabajador");
+        JTable tblTrabajadores = new JTable(mdlTrabajadores);
+        JScrollPane scrlTrabajadores = new JScrollPane(tblTrabajadores);
+        panelTrabajadores.add(scrlTrabajadores);
 
         // Configurar botones
         configurarBotones(btnTrabajadores);

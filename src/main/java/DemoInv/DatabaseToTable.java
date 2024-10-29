@@ -21,7 +21,8 @@ public class DatabaseToTable {
     public static void cargarDatos(DefaultTableModel model, String query) {
         Connection con = getConnection();
 
-        try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();

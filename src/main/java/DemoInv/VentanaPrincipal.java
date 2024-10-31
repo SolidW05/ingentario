@@ -19,10 +19,6 @@ public class VentanaPrincipal extends JFrame {
     private JButton btnProductos;
     private JLabel Titulo;
     private JPanel panelProvedores;
-    private JButton productosButton;
-    private JButton sucursalButton;
-    private JButton trabajadoresButton;
-
     public VentanaPrincipal() {
 
         add(VentanaPrincipal);
@@ -127,7 +123,6 @@ public class VentanaPrincipal extends JFrame {
         boton.setVerticalTextPosition(SwingConstants.BOTTOM);
     }
 
-    public static void main(String[] args) {
-        new VentanaPrincipal();
+    public static void main(String[] args) { new VentanaPrincipal();
     }
 }

@@ -19,6 +19,15 @@ public class VentanaPrincipal extends JFrame {
     private JButton btnProductos;
     private JLabel Titulo;
     private JPanel panelProvedores;
+    private JButton Editar;
+    private JButton Buscar;
+    private JButton Nuevo;
+    private JButton Eliminar;
+    private JPanel OpcionBotones;
+    private JPanel panelBuscar;
+    private JTextField JTBuscarP;
+    private JButton BTBuscar;
+    private JTable table1;
     private JButton productosButton;
     private JButton sucursalButton;
     private JButton trabajadoresButton;
@@ -32,6 +41,7 @@ public class VentanaPrincipal extends JFrame {
         paneles.add(panelProvedores, "panelProvedores" );
         paneles.add(panelProductos, "panelProductos" );
         paneles.add(panelStock, "panelStock" );
+        paneles.add(panelBuscar, "panelBuscar");
 
         // agregar tablas
         // Productos
@@ -109,6 +119,56 @@ public class VentanaPrincipal extends JFrame {
         setVisible(true);
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cl = (CardLayout) (paneles.getLayout());
+                cl.show(paneles, "panelBuscar");
+            }
+        });
+
+        BTBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String terminoBusqueda = JTBuscarP.getText().trim();
+
+                if (!terminoBusqueda.isEmpty()) {
+                    boolean encontrado = false;
+
+                    for (int i = 0; i < mdlProductos.getRowCount(); i++) {
+                        Object nombreProductoObj = mdlProductos.getValueAt(i, 1);  // va cambiandp entre indices segun la columna
+                        String nombreProducto = nombreProductoObj != null ? nombreProductoObj.toString() : "";
+
+                        if (nombreProducto.toLowerCase().contains(terminoBusqueda.toLowerCase())) {
+                            tblProductos.setRowSelectionInterval(i, i);
+                            tblProductos.scrollRectToVisible(tblProductos.getCellRect(i, 0, true));
+
+                            // Construye la información del producto
+                            StringBuilder detallesProducto = new StringBuilder("Detalles del producto:\n");
+                            for (int j = 0; j < mdlProductos.getColumnCount(); j++) {
+                                String nombreColumna = mdlProductos.getColumnName(j);
+                                Object valorCeldaObj = mdlProductos.getValueAt(i, j);
+                                String valorCelda = valorCeldaObj != null ? valorCeldaObj.toString() : "N/A";
+                                detallesProducto.append(nombreColumna).append(": ").append(valorCelda).append("\n");
+                            }
+                            JOptionPane.showMessageDialog(null, detallesProducto.toString());
+
+                            encontrado = true;
+                            break;
+                        }
+                    }
+
+                    if (!encontrado) {
+                        JOptionPane.showMessageDialog(null, "Producto no encontrado.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un término de búsqueda.");
+                }
+            }
+        });
+
+
+
     }
 
 

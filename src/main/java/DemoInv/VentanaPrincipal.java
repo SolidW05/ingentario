@@ -27,9 +27,11 @@ public class VentanaPrincipal extends JFrame {
     private JButton Nuevo;
     private JButton Eliminar;
     private JPanel OpcionBotones;
-    private JButton productosButton;
-    private JButton sucursalButton;
-    private JButton trabajadoresButton;
+
+    private  DefaultTableModel mdlProductos, mdlStock,
+            mdlProvedores, mdlTrabajadores;
+
+    private JTable d;
 
     public VentanaPrincipal() {
 
@@ -43,14 +45,14 @@ public class VentanaPrincipal extends JFrame {
 
         // agregar tablas
         // Productos
-        DefaultTableModel mdlProductos = new DefaultTableModel();
+        mdlProductos = new DefaultTableModel();
         DatabaseToTable.cargarDatos(mdlProductos, "select * from productos");
         JTable tblProductos = new JTable(mdlProductos);
         JScrollPane scrlproductos = new JScrollPane(tblProductos);
         panelProductos.add(scrlproductos);
         // Stock
 
-        DefaultTableModel mdlStock = new DefaultTableModel();
+        mdlStock = new DefaultTableModel();
         DatabaseToTable.cargarDatos(mdlStock, "select * from stock");
         JTable tblStock = new JTable(mdlStock);
         JScrollPane scrlStock = new JScrollPane(tblStock);
@@ -58,7 +60,7 @@ public class VentanaPrincipal extends JFrame {
 
         //Provedores
 
-        DefaultTableModel mdlProvedores = new DefaultTableModel();
+        mdlProvedores = new DefaultTableModel();
         DatabaseToTable.cargarDatos(mdlProvedores, "select * from proveedores");
         JTable tblProveedores = new JTable(mdlProvedores);
         JScrollPane scrlProveedores = new JScrollPane(tblProveedores);
@@ -66,7 +68,7 @@ public class VentanaPrincipal extends JFrame {
 
         //Trabajadores
 
-        DefaultTableModel mdlTrabajadores = new DefaultTableModel();
+        mdlTrabajadores = new DefaultTableModel();
         DatabaseToTable.cargarDatos(mdlTrabajadores, "select nombre, puesto, telefono,email from trabajador");
         JTable tblTrabajadores = new JTable(mdlTrabajadores);
         JScrollPane scrlTrabajadores = new JScrollPane(tblTrabajadores);
@@ -169,82 +171,26 @@ public class VentanaPrincipal extends JFrame {
 
         });
         Nuevo.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                JPanel panelNuevoProducto = new JPanel(new GridLayout(0, 2, 5, 5));
+                if (panelProductos.isVisible()){
+                    System.out.println("Productos");
+                } else if (panelProvedores.isVisible()) {
+                    System.out.println("Proveedores");
 
-                // Campos para la entrada de un nuevo registro
-                JTextField txtNombre = new JTextField();
-                JTextField txtDescripcion = new JTextField();
-                JTextField txtCategoria = new JTextField();
-                JTextField txtMarca = new JTextField();
-                JTextField txtProveedor = new JTextField(); // Para ID_Proveedor
-                JTextField txtPrecio = new JTextField();
+                } else if (panelTrabajadores.isVisible()) {
+                    System.out.println("Trabajadores");
 
-                // Agregar etiquetas y campos de texto al panel
-                panelNuevoProducto.add(new JLabel("Nombre:"));
-                panelNuevoProducto.add(txtNombre);
-                panelNuevoProducto.add(new JLabel("Descripción:"));
-                panelNuevoProducto.add(txtDescripcion);
-                panelNuevoProducto.add(new JLabel("Categoría:"));
-                panelNuevoProducto.add(txtCategoria);
-                panelNuevoProducto.add(new JLabel("Marca:"));
-                panelNuevoProducto.add(txtMarca);
-                panelNuevoProducto.add(new JLabel("ID Proveedor:"));
-                panelNuevoProducto.add(txtProveedor);
-                panelNuevoProducto.add(new JLabel("Precio:"));
-                panelNuevoProducto.add(txtPrecio);
+                } else if (panelStock.isVisible()) {
+                    System.out.println("Stock");
 
-                // Muestra el mensaje(osea la otra pantalla)
-                int result = JOptionPane.showConfirmDialog(null, panelNuevoProducto, "Agregar Nuevo Producto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-                if (result == JOptionPane.OK_OPTION) {
-                    String nombre = txtNombre.getText().trim();
-                    String descripcion = txtDescripcion.getText().trim();
-                    String categoria = txtCategoria.getText().trim();
-                    String marca = txtMarca.getText().trim();
-                    String proveedorStr = txtProveedor.getText().trim();
-                    String precioStr = txtPrecio.getText().trim();
-
-                    if (nombre.isEmpty() || descripcion.isEmpty() || categoria.isEmpty() || marca.isEmpty() || proveedorStr.isEmpty() || precioStr.isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-                        return;
-                    }
-
-                    try {
-                        double precio = Double.parseDouble(precioStr);
-                        int idProveedor = Integer.parseInt(proveedorStr);
-
-                        // Aqui se hace la consulta y se aplica el registro
-                        String sql = "INSERT INTO productos (Nombre, Descripcion, Categoria, Marca, ID_Proveedor, Precio) VALUES (?, ?, ?, ?, ?, ?)";
-                        try (Connection con = DatabaseToTable.getConnection();
-                             PreparedStatement stmt = con.prepareStatement(sql)) {
-                            stmt.setString(1, nombre);
-                            stmt.setString(2, descripcion);
-                            stmt.setString(3, categoria);
-                            stmt.setString(4, marca);
-                            stmt.setInt(5, idProveedor);
-                            stmt.setDouble(6, precio);
-                            stmt.executeUpdate();
-                        }
-
-                        // Actualizar el DefaultTableModel
-                        mdlProductos.addRow(new Object[]{nombre, descripcion, categoria, marca, idProveedor, precio});
-
-                        JOptionPane.showMessageDialog(null, "Producto agregado exitosamente.");
-
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(null, "Precio y ID Proveedor deben ser valores numéricos.");
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Error al agregar el producto: " + ex.getMessage());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Error inesperado: " + ex.getMessage());
-                    }
                 }
+
+
             }
         });
-
 
         Eliminar.addActionListener(new ActionListener() {
             @Override
@@ -301,8 +247,6 @@ public class VentanaPrincipal extends JFrame {
         });
 
     }
-
-
 
     private void configurarBotones(JButton boton) {
         boton.setBorderPainted(false);

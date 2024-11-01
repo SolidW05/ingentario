@@ -7,6 +7,7 @@ import java.awt.*;
 public class MainApp {
 
     public static void main(String[] args) {
+        /*
         JFrame frame = new JFrame("Datos de MySQL en JTable");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
@@ -22,5 +23,11 @@ public class MainApp {
         DatabaseToTable.cargarDatos(model, "select * from productos");
 
         frame.setVisible(true);
+        */
+         String valor = "1.5";
+
+         Double valorint = Double.parseDouble(valor);
+
+        System.out.println(valorint);
     }
 }

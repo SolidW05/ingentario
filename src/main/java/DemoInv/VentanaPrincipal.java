@@ -103,7 +103,6 @@ public class VentanaPrincipal extends JFrame {
         });
 
         setVisible(true);
-        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 

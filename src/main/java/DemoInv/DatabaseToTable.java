@@ -5,13 +5,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class DatabaseToTable {
-
+    public static Thread hilo;
     public static Connection getConnection() {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventario",
                     "root",
-                    "1234");
+                    "123456");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -27,6 +27,7 @@ public class DatabaseToTable {
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();
 
+            model.setRowCount(0);
             // Crear las columnas en la tabla
             String[] columnNames = new String[columnCount];
             for (int i = 1; i <= columnCount; i++) {
@@ -45,5 +46,24 @@ public class DatabaseToTable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public static void ActualizaTabla(DefaultTableModel model, String query) {
+        if (hilo != null && hilo.isAlive()) {
+            hilo.interrupt();
+        }
+
+        hilo = new Thread(() -> {
+            while (true) {
+                try {
+                    cargarDatos(model, query);
+
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        hilo.setDaemon(true); // Termina cuando la aplicación finaliza
+        hilo.start(); // Iniciar el hilo
     }
 }

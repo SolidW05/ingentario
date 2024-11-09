@@ -46,14 +46,12 @@ public class VentanaPrincipal extends JFrame {
         // agregar tablas
         // Productos
         mdlProductos = new DefaultTableModel();
-        DatabaseToTable.cargarDatos(mdlProductos, "select * from productos");
         JTable tblProductos = new JTable(mdlProductos);
         JScrollPane scrlproductos = new JScrollPane(tblProductos);
         panelProductos.add(scrlproductos);
         // Stock
 
         mdlStock = new DefaultTableModel();
-        DatabaseToTable.cargarDatos(mdlStock, "select * from stock");
         JTable tblStock = new JTable(mdlStock);
         JScrollPane scrlStock = new JScrollPane(tblStock);
         panelStock.add(scrlStock);
@@ -61,7 +59,6 @@ public class VentanaPrincipal extends JFrame {
         //Provedores
 
         mdlProvedores = new DefaultTableModel();
-        DatabaseToTable.cargarDatos(mdlProvedores, "select * from proveedores");
         JTable tblProveedores = new JTable(mdlProvedores);
         JScrollPane scrlProveedores = new JScrollPane(tblProveedores);
         panelProvedores.add(scrlProveedores);
@@ -69,7 +66,6 @@ public class VentanaPrincipal extends JFrame {
         //Trabajadores
 
         mdlTrabajadores = new DefaultTableModel();
-        DatabaseToTable.cargarDatos(mdlTrabajadores, "select nombre, puesto, telefono,email from trabajador");
         JTable tblTrabajadores = new JTable(mdlTrabajadores);
         JScrollPane scrlTrabajadores = new JScrollPane(tblTrabajadores);
         panelTrabajadores.add(scrlTrabajadores);
@@ -91,6 +87,7 @@ public class VentanaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) (paneles.getLayout());
                 cl.show(paneles, "panelStock");
+                DatabaseToTable.ActualizaTabla(mdlStock, "select * from stock");
             }
         });
         btnProductos.addActionListener(new ActionListener() {
@@ -98,6 +95,7 @@ public class VentanaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) (paneles.getLayout());
                 cl.show(paneles, "panelProductos");
+                DatabaseToTable.ActualizaTabla(mdlProductos, "select * from productos");
             }
         });
         btnTrabajadores.addActionListener(new ActionListener() {
@@ -105,6 +103,7 @@ public class VentanaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) (paneles.getLayout());
                 cl.show(paneles, "panelTrabajadores");
+                DatabaseToTable.ActualizaTabla(mdlTrabajadores,"select nombre, puesto, telefono,email from trabajador");
             }
         });
 
@@ -113,6 +112,7 @@ public class VentanaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) (paneles.getLayout());
                 cl.show(paneles, "panelProvedores");
+                DatabaseToTable.ActualizaTabla(mdlProvedores, "select * from proveedores");
             }
         });
 

@@ -1,5 +1,7 @@
 package DemoInv;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
@@ -137,7 +139,7 @@ public class EditFromTable {
         }
     }
 
-    private static Object[] getPrevValues(String tableName,String nameID, int id){
+    private static Object[] getPrevValues(String tableName, String nameID, int id){
         String query = "SELECT * FROM " + tableName + " WHERE " + nameID + " = " + id;
         try (Connection con = DatabaseToTable.getConnection();
              Statement stmt = con.createStatement();

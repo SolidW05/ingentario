@@ -39,6 +39,7 @@ public class VentanaPrincipal extends JFrame {
     private JComboBox opcionesBusqueda;
     private JTextField filtro;
     private JPanel panelBusqueda;
+    private JButton btnNotificaciones;
 
     private  DefaultTableModel mdlProductos, mdlStock,
             mdlProvedores, mdlTrabajadores, mdlRecepcion;
@@ -136,6 +137,14 @@ public class VentanaPrincipal extends JFrame {
         configurarBotones(btnProductos);
         configurarBotones(btnStock);
         configurarBotones(btnRecepcion);
+        btnNotificaciones.setOpaque(false);
+        btnNotificaciones.setContentAreaFilled(false);
+        btnNotificaciones.setBorderPainted(false);
+
+        ImageIcon icono = new ImageIcon("src/ImagenesButton/Notificaciones.png");
+
+        btnNotificaciones.setIcon(icono);
+
 
         // Agregar imágenes a los botones
         agregarImagenABoton(btnProductos, "src/ImagenesButton/Productos.png");
@@ -264,6 +273,13 @@ public class VentanaPrincipal extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        btnNotificaciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StockR.mostrarProductosASurtir();
+
+            }
+        });
     }
 
     private void insert(){
